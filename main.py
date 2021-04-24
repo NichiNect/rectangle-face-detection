@@ -4,23 +4,32 @@ import cv2
 trainedFaceData =  cv2.CascadeClassifier('haarcascade_frontalface_default.xml') 
 
 # Choose image to detect for example then resize
-img = cv2.imread('data-test/pic2.jpg')
-imgResize = cv2.resize(img, (820, 720))
+cam = cv2.VideoCapture(0)
+# imgResize = cv2.resize(cam, (820, 720))
 
-# Change to GrayScale
-filterGrayScaled = cv2.cvtColor(imgResize, cv2.COLOR_BGR2GRAY)
+# Iterate the camera's frame
+while True:
 
-# Detect faces
-coordinateFaces = trainedFaceData.detectMultiScale(filterGrayScaled)
+    successful_frame_read, frame = cam.read()
 
-# Draw the rectangle
-for (x, y, width, height) in coordinateFaces: 
-    rectangledImg = cv2.rectangle(imgResize, (x, y), (x + width, y + height), (0, 255, 0), 3)
+    # Change to GrayScale
+    filterGrayScaled = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-print(coordinateFaces)
+    # Detect faces
+    coordinateFaces = trainedFaceData.detectMultiScale(filterGrayScaled)
 
-# Show the Face
-cv2.imshow('Face Detection - Yoni Widhi', rectangledImg)
-cv2.waitKey(0)
+    # Draw the rectangle
+    for (x, y, width, height) in coordinateFaces: 
+        cv2.rectangle(frame, (x, y), (x + width, y + height), (0, 255, 0), 3)
 
+    # print(coordinateFaces)
+
+    # Show the Face
+    cv2.imshow('Face Detection - Yoni Widhi', frame)
+    key = cv2.waitKey(1)
+
+    if key==81 or key==113:
+        break
+
+cam.release()
 print('Hello Code!')
