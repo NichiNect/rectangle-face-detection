@@ -1,7 +1,12 @@
 import cv2
+import sys
 
 # Load some pre-trained data on face frontals from opencv (haar cascade algorithm)
-trainedFaceData =  cv2.CascadeClassifier('haarcascade_frontalface_default.xml') 
+if len(sys.argv) > 1:
+    if sys.argv[1]=='eye': 
+        trainedFaceData =  cv2.CascadeClassifier('haarcascade_eye.xml')
+else:
+    trainedFaceData =  cv2.CascadeClassifier('haarcascade_frontalface_default.xml') 
 
 # Choose image to detect for example then resize
 cam = cv2.VideoCapture(0)
