@@ -9,8 +9,12 @@ else:
     trainedFaceData =  cv2.CascadeClassifier('haarcascade_frontalface_default.xml') 
 
 # Choose image to detect for example then resize
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(1)
 # imgResize = cv2.resize(cam, (820, 720))
+
+if not cam.isOpened():
+    print("Kamera tidak dapat diakses!")
+    exit()
 
 # Iterate the camera's frame
 while True:
